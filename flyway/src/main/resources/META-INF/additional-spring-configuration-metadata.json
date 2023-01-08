@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "flyway.migration.options",
+      "type": "java.lang.String",
+      "description": "Flyway options."
+  }
+] }

@@ -1,0 +1,388 @@
+openapi: 3.0.3
+info:
+  title: Virta Task 1
+  version: 1.0.0
+servers:
+  - url: "http://localhost:8080/api"
+paths:
+  /companies:
+    post:
+      tags:
+        - Company Information
+      description: Add new company
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyCreatingDto'
+      responses:
+        200:
+          description: Company created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusEntity'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEntity'
+
+  /companies/{id}:
+    get:
+      tags:
+        - Company Information
+      description: Get the imformation abount company
+      parameters:
+        - in: path
+          required: true
+          name: id
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyInfoDto'
+        404:
+          description: Not found(invalid token)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEntity'
+    put:
+      tags:
+        - Company Information
+      description: Update the imformation abount company
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyInfoUpdateDto'
+        404:
+          description: Not found(invalid token)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEntity'
+    delete:
+      tags:
+        - Company Information
+      description: Delete company
+      parameters:
+        - in: path
+          required: true
+          name: id
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusEntity'
+        404:
+          description: Not found(invalid token)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEntity'
+
+  /stations:
+    post:
+      tags:
+        - Station Information
+      description: Add new station
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StationCreatingDto'
+      responses:
+        200:
+          description: Company created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusEntity'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEntity'
+
+  /stations/{id}:
+    get:
+      tags:
+        - Station Information
+      description: Get the imformation abount station
+      parameters:
+        - in: path
+          required: true
+          name: id
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StationInfoDto'
+        404:
+          description: Not found(invalid token)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEntity'
+    put:
+      tags:
+        - Station Information
+      description: Update the imformation abount station
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StationInfoUpdateDto'
+        404:
+          description: Not found(invalid token)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEntity'
+    delete:
+      tags:
+        - Station Information
+      description: Delete station
+      parameters:
+        - in: path
+          required: true
+          name: id
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusEntity'
+        404:
+          description: Not found(invalid token)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEntity'
+
+  /stations/company/{companyId}:
+    get:
+      tags:
+        - Station Information
+      description: Get stations of the company
+      parameters:
+        - in: path
+          required: true
+          name: companyId
+          schema:
+            type: number
+        - in: query
+          required: true
+          name: page
+          schema:
+            type: number
+        - in: query
+          required: true
+          name: size
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StationsInfoDto'
+        404:
+          description: Not found(invalid token)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEntity'
+
+components:
+  schemas:
+    CompanyInfoDto:
+      type: object
+      properties:
+        id:
+          title: Id of Company
+          type: number
+        name:
+          title: Name of Company
+          type: string
+        parentCompanyId:
+          title: Id of Parent Company
+          type: number
+        stationsInfoDtoList:
+          title: Stations info
+          type: array
+          items:
+            title: Station List
+            type: object
+            properties:
+              id:
+                title: Id of Station
+                type: number
+              name:
+                title: Name of Station
+                type: string
+              latitude:
+                title: Lat value of location ( Station )
+                type: number
+              longitude:
+                title: Long value of location ( Station )
+                type: number
+              companyID:
+                title: Id of Company
+                type: number
+
+    StationsInfoDto:
+      type: object
+      properties:
+        id:
+          title: Id of Station
+          type: number
+        name:
+          title: Name of Station
+          type: string
+        latitude:
+          title: Lat value of location ( Station )
+          type: number
+        longitude:
+          title: Long value of location ( Station )
+          type: number
+        companyID:
+          title: Id of Company
+          type: number
+
+
+    CompanyCreatingDto:
+      type: object
+      properties:
+        name:
+          title: Name of the Company
+          type: string
+        parentCompanyID:
+          title: Id of Parent Company
+          type: number
+
+    StationCreatingDto:
+      type: object
+      properties:
+        name:
+          title: Name of the Company
+          type: string
+        companyID:
+          title: Id of Company
+          type: number
+        latitude:
+          title: Lat value of location ( Station )
+          type: number
+        longitude:
+          title: Long value of location ( Station )
+          type: number
+
+    StationInfoDto:
+      type: object
+      properties:
+        id:
+          title: Id of the Station
+          type: number
+        name:
+          title: Name of the Company
+          type: string
+        companyID:
+          title: Id of Company
+          type: number
+        latitude:
+          title: Lat value of location ( Station )
+          type: number
+        longitude:
+          title: Long value of location ( Station )
+          type: number
+
+    StationInfoUpdateDto:
+      type: object
+      properties:
+        name:
+          title: Name of the Company
+          type: string
+        latitude:
+          title: Lat value of location ( Station )
+          type: number
+        longitude:
+          title: Long value of location ( Station )
+          type: number
+
+    CompanyInfoUpdateDto:
+      type: object
+      properties:
+        name:
+          title: Name of the Company
+          type: string
+        parentCompanyID:
+          title: Id of Parent Company
+          type: number
+
+    ErrorEntity:
+      title: Error entity
+      required:
+        - status
+        - message
+      type: object
+      properties:
+        status:
+          title: Status
+          description: Http status of the error
+          type: integer
+        message:
+          title: Error message
+          type: string
+
+    StatusEntity:
+      title: Status entity response
+      type: object
+      properties:
+        status:
+          title: Status
+          type: string
+          description: Response's Http status
+          default: 200
+        message:
+          title: Message
+          type: string
+          description: informative message
+          default: ""

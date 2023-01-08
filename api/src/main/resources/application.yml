@@ -1,0 +1,22 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 45MB
+  datasource:
+    url: jdbc:mysql://${database.host:localhost}:${database.port:3306}/${database.schema:virta_task_db}
+    username: ${database.user:root}
+    password: ${database.password:gor123}
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        id:
+          new_generator_mappings: false
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+      ddl-auto: validate
